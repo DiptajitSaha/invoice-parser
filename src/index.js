@@ -1,8 +1,9 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { createWorker } = require("tesseract.js");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require("express");
 const multer = require("multer");
 const pdfParse = require("pdf-parse");
+const sharp = require("sharp");
 const fs = require("fs");
 
 require("dotenv").config();
@@ -50,7 +51,6 @@ async function extractInfoWithGemini(text) {
         throw error;
     }
 }
-
 
 async function parse(filePath) {
     const worker = await createWorker("eng");
