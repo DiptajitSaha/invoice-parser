@@ -43,7 +43,7 @@ async function extractInfoWithGemini(text) {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent([
-            `Extract customer details, product, and total amount from the following text give output in simple text NO md!:\n\n${text}`,
+            `Extract customer details, product, and total amount from the following text:\n\n${text}`,
         ]);
         return result.response.text();
     } catch (error) {
