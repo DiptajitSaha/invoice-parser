@@ -13,9 +13,9 @@ const upload = multer({ dest: "uploads/" });
 app.use(express.json());
 
 app.post("/upload", upload.single("file"), async (req, res) => {
-    const filePath = req.file.path;
-    const fileType = req.file.mimetype;
     try {
+        const filePath = req.file.path;
+        const fileType = req.file.mimetype;
         let extractedText;
         if (fileType === "application/pdf") {
             // Process PDF
@@ -39,17 +39,34 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 });
 
 async function extractInfoWithGemini(text) {
+    
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent([
-            `Extract customer details, product, and total amount from the following text:\n\n${text}`,
+            `Extract customer details, product, and total amount from the following text create json:\n\n${text}`,
         ]);
-        return result.response.text();
+
+        return convertToValidJson(result.response.text())
+
     } catch (error) {
         console.error("Error calling Gemini API:", error);
         throw error;
     }
 }
+
+function convertToValidJson(str) {
+    const cleanedString = str
+      .replace(/```json\n|\n```/g, "")
+      .replace(/\\n/g, ", ");
+  
+    try {
+      const jsonObject = JSON.parse(cleanedString);
+      return jsonObject;
+    } catch (e) {
+      console.error("Invalid JSON format:", e);
+      return null;
+    }
+  }
 
 async function parse(filePath) {
     const worker = await createWorker("eng");
@@ -58,6 +75,7 @@ async function parse(filePath) {
     await worker.terminate();
     return text;
 }
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

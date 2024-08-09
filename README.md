@@ -54,6 +54,30 @@ Here's a sample output from the extraction:
 
 ```bash
 {
-    "extractedInfo": "```json\n{\n  \"customer_details\": {\n    \"name\": \"TEST\",\n    \"address\": \"Hyderabad, TELANGANA, 500089\",\n    \"phone\": \"9108239284\",\n    \"email\": \"test@gmail.com\"\n  },\n  \"product\": {\n    \"description\": \"WASTE AND SCRAP OF STAINLESS STEEL\",\n    \"hsn_code\": \"72042190\",\n    \"rate\": 9500,\n    \"quantity\": \"6790KGS\"\n  },\n  \"total_amount\": 768771.00\n}\n```\n"
+    
+    "extractedInfo": {
+        "customer_details": {
+            "name": "Test",
+            "address": "Hyderabad, TELANGANA, 500089",
+            "phone": "9108239284",
+            "email": "test@gmail.com"
+        },
+        "product": {
+            "name": "WASTE AND SCRAP OF STAINLESS STEEL",
+            "hsn": "72042190",
+            "rate": 9500,
+            "quantity": "6790KGS"
+        },
+        "total_amount": {
+            "taxable_amount": 645050,
+            "gst": 116100,
+            "tcs": 7611.5,
+            "round_off": 0.41,
+            "total": 768771,
+            "in_words": "INR Seven Lakh, Sixty-Eight Thousand, Seven Hundred And Seventy-One Rupees Only"
+        }
+    }
+    
+
 }
 ```
